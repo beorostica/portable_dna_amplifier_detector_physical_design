@@ -17,28 +17,28 @@ heightInsideCube = 1.00;
  * Modules for Individual Tube and Holes
  */
 
-module objectTube(){
+module objectTube(){ 
+  //Inferior Part:
   r1    = 0.14;
   r2    = 0.30;
   alpha = 17.5;
-  h     = (r2-r1)/tan(alpha/2);
+  dh    = (r2-r1)/tan(alpha/2);
   translate([0,0,r1]){
-    cylinder(h,r1,r2);
+    cylinder(dh,r1,r2);
     sphere(r1);
   }
-  
-  h = 2.00;        //Just a large length
-  r = r2;
-  z = h + r1;
+  //Superior Part:
+  h = heightInsideCube - dh - r1 + 1; 
+  r = r2;                           //"h" is just a large length
+  z = dh + r1;
   translate([0,0,z]){
     cylinder(h,r,r);    
   }
-  
 }
 
 module objectHoles(){
-  h = 4;        //Just a large length
-  r = 0.25;
+  h = 0.5*(widthInsideCube-tubeSeparation) + widthFilter + largeDetectors + 1;  
+  r = 0.25;                         //"h" is just a large length
   translate([0,0,r]){
     rotate( 90,[0,1,0]){cylinder(h,r,r);}
     rotate(-90,[1,0,0]){cylinder(h,r,r);}
@@ -61,9 +61,9 @@ module objectTubeHoles(angle,x,y,z){
  */
 
 module objectFilter(angle,x,y,z){
-  a = widthInsideCube + widthFilter + largeDetectors + 1;    //Just a large length 
-  b = widthFilter;
-  c = heightInsideCube + 1;   //Just a large length;
+  a = widthInsideCube + widthFilter + largeDetectors + 1;     
+  b = widthFilter;                  //"a" and "c" are just large lengths
+  c = heightInsideCube + 1;         
   translate([x,y,z]){
     rotate(angle,[0,0,1]){
       cube([a,b,c]);
@@ -97,11 +97,9 @@ module objectFourFilters(){
 
 
 
-
-//Display the result
+//Display the result:
 objectFourTubesHoles();
 objectFourFilters();
-
 
 
 /*
