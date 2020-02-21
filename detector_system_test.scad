@@ -2,7 +2,6 @@
 $fn = 30;
 
 module essayTube(){
-  
   r1    = 0.14;
   r2    = 0.30;
   alpha = 17.5;
@@ -12,14 +11,12 @@ module essayTube(){
     sphere(r1);
   }
   
-
   h = 0.50;
   r = r2;
   z = h + r1;
   translate([0,0,z]){
     cylinder(h,r,r);    
   }
-  
   
 }
 
@@ -34,5 +31,16 @@ module detectionHoles(){
   }
 }
 
-essayTube();
-detectionHoles();
+module objectTubeHoles(a,x,y){
+  translate([ x, y,0]){
+    rotate(a,[0,0,1]){
+      essayTube(); 
+      detectionHoles();
+    }
+  }
+}
+
+objectTubeHoles(  0, 0.5, 0.5);
+objectTubeHoles( 90,-0.5, 0.5);
+objectTubeHoles(180,-0.5,-0.5);
+objectTubeHoles(270, 0.5,-0.5);
