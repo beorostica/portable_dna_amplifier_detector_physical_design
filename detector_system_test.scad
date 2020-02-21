@@ -5,16 +5,19 @@ $fn = 30;
  * Add global parameters
  */
 
-HEIGHT_OFFSET    = 0;
+HEIGHT_OFFSET = 0.2;
+
+radiusHoles  = 0.25;
+radiusLeds   = 0.30;   
+radiusDiodes = 0.40;
+HEIGHT_ADDITIONAL = max(radiusDiodes,radiusLeds) - radiusHoles;
+
 tubeSeparation   = 1.00;
 largeDetectors   = 0.80;
 widthFilter      = 0.32;
 widthInsideCube  = 2.40;
 heightInsideCube = 1.00;
 
-radiusHoles  = 0.25;
-radiusLeds   = 0.30;   
-radiusDiodes = 0.40;
 
 /**
  * Modules for Individual Tube and Holes
@@ -31,7 +34,7 @@ module objectTube(){
     sphere(r1);
   }
   //Superior Part:
-  h = heightInsideCube - dh - r1 + 1; 
+  h = heightInsideCube - HEIGHT_ADDITIONAL - dh - r1 + 1; 
   r = r2;                           //"h" is just a large length
   z = dh + r1;
   translate([0,0,z]){
@@ -96,12 +99,13 @@ module objectExternalHole(radius){
 module objectFourTubesHoles(){
   angle = 90;
   d     = tubeSeparation/2;
-  z     = 0 + HEIGHT_OFFSET;
+  z     = HEIGHT_ADDITIONAL + HEIGHT_OFFSET;
   objectTubeHoles(0*angle, d, d, z);
   objectTubeHoles(1*angle,-d, d, z);
   objectTubeHoles(2*angle,-d,-d, z);
   objectTubeHoles(3*angle, d,-d, z);
 }
+
 module objectFourFilters(){
   angle = 90;
   d     = widthInsideCube/2;
@@ -116,14 +120,15 @@ module objectAllExternalHoles(){
   angle = 90;
   p = 0.5*(widthInsideCube + widthFilter);
   q = tubeSeparation/2;
-  translate([ p, q,0]){rotate(0*angle,[0,0,1]){objectExternalHole(radiusLeds);}}
-  translate([ p,-q,0]){rotate(0*angle,[0,0,1]){objectExternalHole(radiusLeds);}}
-  translate([-q, p,0]){rotate(1*angle,[0,0,1]){objectExternalHole(radiusDiodes);}}
-  translate([ q, p,0]){rotate(1*angle,[0,0,1]){objectExternalHole(radiusDiodes);}}
-  translate([-p,-q,0]){rotate(2*angle,[0,0,1]){objectExternalHole(radiusLeds);}}
-  translate([-p, q,0]){rotate(2*angle,[0,0,1]){objectExternalHole(radiusLeds);}}
-  translate([-q,-p,0]){rotate(3*angle,[0,0,1]){objectExternalHole(radiusDiodes);}}
-  translate([ q,-p,0]){rotate(3*angle,[0,0,1]){objectExternalHole(radiusDiodes);}}  
+  z = HEIGHT_ADDITIONAL + HEIGHT_OFFSET;
+  translate([ p, q, z]){rotate(0*angle,[0,0,1]){objectExternalHole(radiusLeds);}}
+  translate([ p,-q, z]){rotate(0*angle,[0,0,1]){objectExternalHole(radiusLeds);}}
+  translate([-q, p, z]){rotate(1*angle,[0,0,1]){objectExternalHole(radiusDiodes);}}
+  translate([ q, p, z]){rotate(1*angle,[0,0,1]){objectExternalHole(radiusDiodes);}}
+  translate([-p,-q, z]){rotate(2*angle,[0,0,1]){objectExternalHole(radiusLeds);}}
+  translate([-p, q, z]){rotate(2*angle,[0,0,1]){objectExternalHole(radiusLeds);}}
+  translate([-q,-p, z]){rotate(3*angle,[0,0,1]){objectExternalHole(radiusDiodes);}}
+  translate([ q,-p, z]){rotate(3*angle,[0,0,1]){objectExternalHole(radiusDiodes);}}  
 }
 
 
