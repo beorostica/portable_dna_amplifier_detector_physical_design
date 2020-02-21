@@ -31,8 +31,8 @@ module detectionHoles(){
   }
 }
 
-module objectTubeHoles(a,x,y){
-  translate([ x, y,0]){
+module objectTubeHoles(a,x,y,z){
+  translate([x,y,z]){
     rotate(a,[0,0,1]){
       essayTube(); 
       detectionHoles();
@@ -40,7 +40,20 @@ module objectTubeHoles(a,x,y){
   }
 }
 
-objectTubeHoles(  0, 0.5, 0.5);
-objectTubeHoles( 90,-0.5, 0.5);
-objectTubeHoles(180,-0.5,-0.5);
-objectTubeHoles(270, 0.5,-0.5);
+difference(){
+
+  heightOffset = 0.4;
+  
+  b = 2.4;
+  c = 1 + heightOffset;
+  translate([-b/2,-b/2,0]){cube([b,b,c]);}
+    
+  a = 90;
+  d = 0.5;
+  z = 0 + heightOffset;
+  objectTubeHoles(0*a, d, d, z);
+  objectTubeHoles(1*a,-d, d, z);
+  objectTubeHoles(2*a,-d,-d, z);
+  objectTubeHoles(3*a, d,-d, z);
+    
+}
