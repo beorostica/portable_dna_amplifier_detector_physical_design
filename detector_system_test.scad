@@ -8,7 +8,7 @@ $fn = 30;
 HEIGHT_OFFSET = 0.2;
 
 radiusHoles  = 0.25;
-radiusLeds   = 0.30;   
+radiusLeds   = 0.27;   
 radiusDiodes = 0.40;
 HEIGHT_ADDITIONAL = max(radiusDiodes,radiusLeds) - radiusHoles;
 
@@ -16,7 +16,7 @@ tubeSeparation   = 1.00;
 largeDetectors   = 0.80;
 widthFilter      = 0.32;
 widthInsideCube  = 2.40;
-heightInsideCube = 1.00;
+heightInsideCube = 1.40;
 
 
 /**
@@ -133,38 +133,18 @@ module objectAllExternalHoles(){
 
 
 
-//Display the result:
-objectFourTubesHoles();
-objectFourFilters();
-objectAllExternalHoles();
-
-
-
-
-/*
-module insideCube(){
-  b = widthInsideCube;
-  c = heightInsideCube;
-  translate([-b/2,-b/2,0]){cube([b,b,c]);}
-}
-*/
-
-/*
-heightOffset = 0.4;
+/**
+ * Display the result
+ */
 
 difference(){
   
-  b = 2.4;
-  c = 1 + heightOffset;
+  b = widthInsideCube + 2*(widthFilter + largeDetectors);
+  c = heightInsideCube;
   translate([-b/2,-b/2,0]){cube([b,b,c]);}
-    
-  a = 90;
-  d = 0.5;
-  z = 0 + heightOffset;
-  objectTubeHoles(0*a, d, d, z);
-  objectTubeHoles(1*a,-d, d, z);
-  objectTubeHoles(2*a,-d,-d, z);
-  objectTubeHoles(3*a, d,-d, z);
-    
+
+  objectFourTubesHoles();
+  objectFourFilters();
+  objectAllExternalHoles();
 }
-*/
+
