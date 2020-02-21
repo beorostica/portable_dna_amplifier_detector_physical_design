@@ -5,18 +5,18 @@ $fn = 30;
  * Add global parameters
  */
 
-HEIGHT_OFFSET = 0.2;
+HEIGHT_OFFSET = 2.0;
 
-radiusHoles  = 0.25;
-radiusLeds   = 0.27;   
-radiusDiodes = 0.40;
+radiusHoles  = 2.5;
+radiusLeds   = 2.7;   
+radiusDiodes = 4.0;
 HEIGHT_ADDITIONAL = max(radiusDiodes,radiusLeds) - radiusHoles;
 
-tubeSeparation   = 1.00;
-largeDetectors   = 0.80;
-widthFilter      = 0.32;
-widthInsideCube  = 2.40;
-heightInsideCube = 1.40;
+tubeSeparation   = 10.0;
+largeDetectors   =  8.0;
+widthFilter      =  3.2;
+widthInsideCube  = 24.0;
+heightInsideCube = 14.0;
 
 
 /**
@@ -25,8 +25,8 @@ heightInsideCube = 1.40;
 
 module objectTube(){ 
   //Inferior Part:
-  r1    = 0.14;
-  r2    = 0.30;
+  r1    = 1.4;
+  r2    = 3.0;
   alpha = 17.5;
   dh    = (r2-r1)/tan(alpha/2);
   translate([0,0,r1]){
