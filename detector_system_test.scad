@@ -12,6 +12,9 @@ widthFilter      = 0.32;
 widthInsideCube  = 2.40;
 heightInsideCube = 1.00;
 
+radiusHoles  = 0.25;
+radiusLeds   = 0.30;   
+radiusDiodes = 0.40;
 
 /**
  * Modules for Individual Tube and Holes
@@ -38,7 +41,7 @@ module objectTube(){
 
 module objectHoles(){
   h = 0.5*(widthInsideCube-tubeSeparation) + widthFilter + largeDetectors + 1;  
-  r = 0.25;                         //"h" is just a large length
+  r = radiusHoles;                  //"h" is just a large length
   translate([0,0,r]){
     rotate( 90,[0,1,0]){cylinder(h,r,r);}
     rotate(-90,[1,0,0]){cylinder(h,r,r);}
@@ -71,9 +74,23 @@ module objectFilter(angle,x,y,z){
   }
 }
 
+/**
+ * Modules for Individual External Holes
+ */
+
+module objectExternalHole(radius){
+  h = 0.5*widthFilter + largeDetectors + 1;
+  r = radius;
+  translate([0,0,radiusHoles]){
+    rotate(90,[0,1,0]){
+      cylinder(h,r,r);
+    }
+  }
+}
+
 
 /**
- * Modules for adding four elements
+ * Modules for adding multiple elements
  */
 
 module objectFourTubesHoles(){
@@ -95,11 +112,28 @@ module objectFourFilters(){
   objectFilter(3*angle, d, d, z);
 }
 
+module objectAllExternalHoles(){
+  angle = 90;
+  p = 0.5*(widthInsideCube + widthFilter);
+  q = tubeSeparation/2;
+  translate([ p, q,0]){rotate(0*angle,[0,0,1]){objectExternalHole(radiusLeds);}}
+  translate([ p,-q,0]){rotate(0*angle,[0,0,1]){objectExternalHole(radiusLeds);}}
+  translate([-q, p,0]){rotate(1*angle,[0,0,1]){objectExternalHole(radiusDiodes);}}
+  translate([ q, p,0]){rotate(1*angle,[0,0,1]){objectExternalHole(radiusDiodes);}}
+  translate([-p,-q,0]){rotate(2*angle,[0,0,1]){objectExternalHole(radiusLeds);}}
+  translate([-p, q,0]){rotate(2*angle,[0,0,1]){objectExternalHole(radiusLeds);}}
+  translate([-q,-p,0]){rotate(3*angle,[0,0,1]){objectExternalHole(radiusDiodes);}}
+  translate([ q,-p,0]){rotate(3*angle,[0,0,1]){objectExternalHole(radiusDiodes);}}  
+}
+
 
 
 //Display the result:
 objectFourTubesHoles();
 objectFourFilters();
+objectAllExternalHoles();
+
+
 
 
 /*
