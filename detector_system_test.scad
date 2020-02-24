@@ -9,7 +9,7 @@ HEIGHT_OFFSET = 2.0;
 
 radiusHoles  = 2.5;
 radiusLeds   = 2.7;   
-radiusDiodes = 4.0;
+radiusDiodes = 4.1;
 HEIGHT_ADDITIONAL = max(radiusDiodes,radiusLeds) - radiusHoles;
 
 tubeSeparation   = 10.0;
@@ -25,8 +25,8 @@ heightInsideCube = 14.0;
 
 module objectTube(){ 
   //Inferior Part:
-  r1    = 1.4;
-  r2    = 3.0;
+  r1    = 1.5;
+  r2    = 3.1;
   alpha = 17.5;
   dh    = (r2-r1)/tan(alpha/2);
   translate([0,0,r1]){
@@ -147,4 +147,5 @@ difference(){
   objectFourFilters();
   objectAllExternalHoles();
 }
+
 
